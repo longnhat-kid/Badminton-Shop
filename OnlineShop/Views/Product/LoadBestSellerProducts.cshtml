@@ -1,0 +1,14 @@
+﻿@model IEnumerable<OnlineShop.Models.SanPham>
+
+<ul class="small-product">
+    @foreach (var product in Model)
+    {
+        <li>
+            <a href="@Url.Action("ProductDetail", "Product", new { id = product.MaSP })" style="display: block; text-align: center">
+                <img src="~/Assets/images/products/@product.HinhAnh" alt="">
+                <p>@product.TenSP</p>
+            </a>
+
+        </li>
+    }
+</ul>

@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "UserAccount";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<section class="main-content">
+    <div class="row">
+        <div class="span12">
+            <div class="accordion" id="accordion2">
+                @Html.Action("LoadProductsProcessByUserId", "User")
+                @Html.Action("LoadProductsOrderedByUserId", "User")
+                @Html.Action("LoadLikeListByUserId", "User")
+
+            </div>
+        </div>
+    </div>
+</section>
+

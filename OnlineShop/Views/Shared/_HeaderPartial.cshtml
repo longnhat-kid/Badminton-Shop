@@ -1,0 +1,102 @@
+﻿@using OnlineShop.Models
+
+<div id="top-bar" class="container">
+    <div class="row">
+        <div class="span4">
+            @using (Html.BeginForm("Search", "Product", FormMethod.Post, new { @class = "search_form" }))
+            {
+                <input type="text" name="keyword" class="input-block-level search-query" placeholder="eg. Yonex" style="color: black">
+            }
+        </div>
+        <div class="span8">
+            <div class="account pull-right">
+                <ul class="user-menu">
+                    @if (Session["User"] != null)
+                    {
+                        ThanhVien user = Session["User"] as ThanhVien;
+                        <li class="dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" data-toggle="dropdown" style="text-decoration: none; position: relative; font-size: 15px">
+                                <i class="fas fa-user-secret"></i>
+                                Welcome, @user.HoTen <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right list-group" style="position: absolute; right: 0">
+                                <li class="list-group-item-info" style="display: block; cursor: pointer"><a href="@Url.Action("UserAccount","User")">Tài khoản</a></li>
+                                <li class="list-group-item-info" style="display: block; cursor: pointer">
+                                    <a href="@Url.Action("Index", "Cart")">
+                                        Giỏ hàng
+                                    </a>
+                                </li>
+                                <li class="list-group-item-info" style="display: block; cursor: pointer">
+                                    <a href="/Order/Index">Thanh toán</a>
+                                </li>
+
+                                <li class="list-group-item-info" style="display: block; cursor: pointer">
+                                    <div class="divider"></div>
+                                    @if (user.LoaiThanhVien.TenLoai == "Admin")
+                                    {
+                                        <a href="@Url.Action("Index", "Admin")" style="color:red; font-weight: bold">Admin</a>
+                                    }
+                                    <a href="@Url.Action("Logout", "User")">Đăng xuất</a>
+                                </li>
+                            </ul>
+
+                        </li>
+                    }
+                    else
+                    {
+                        <li><a href="" data-toggle="modal" data-target="#loginModal">Đăng nhập</a></li>
+                        <li><a href="@Url.Action("Register", "User")">Đăng kí</a></li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="border: none">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="overflow-y: unset">
+                <div class="form-title text-center">
+                    <h4>Đăng nhập</h4>
+                </div>
+                <div class="d-flex flex-column text-center">
+                    @using (Ajax.BeginForm("Login", "User", new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "login-notify" }))
+                    {
+                        <div class="form-group">
+                            <input name="username" type="text" class="form-control" id="email1" placeholder="Tên đăng nhập..." style="width: 100%; box-sizing: border-box; height: 40px">
+                        </div>
+                        <div class="form-group">
+                            <input name="password" type="password" class="form-control" id="password1" placeholder="Mật khẩu..." style="width: 100%; box-sizing: border-box; height: 40px">
+                        </div>
+                        <p id="login-notify" style="color: red; font-size: 14px"></p>
+                        <button type="submit" class="btn btn-info btn-block btn-round" style="height: 40px">Đăng nhập</button>
+                    }
+
+                    <div class="text-center text-muted delimiter">hoặc sử dụng mạng xã hội</div>
+                    <div class="d-flex justify-content-center social-buttons">
+                        <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip" data-placement="top" title="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip" data-placement="top" title="Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-round" data-toggle="tooltip" data-placement="top" title="Linkedin">
+                            <i class="fab fa-linkedin"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <div class="signup-section">Chưa là thành viên? <a href="@Url.Action("Register", "User")" class="text-info"> Đăng kí</a>.</div>
+            </div>
+        </div>
+    </div>
+</div>

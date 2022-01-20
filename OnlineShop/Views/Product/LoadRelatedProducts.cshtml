@@ -1,0 +1,306 @@
+﻿@using OnlineShop.Models
+@model IEnumerable<SanPham>
+
+@{
+    List<SanPham> listRelatedProducts = Model.ToList();
+}
+
+<div class="span9">
+    <br>
+    <h4 class="title">
+        <span class="pull-left"><span class="text"><strong>Related</strong> Products</span></span>
+        <span class="pull-right">
+            <a class="left button" href="#myCarousel-1" data-slide="prev"></a><a class="right button" href="#myCarousel-1" data-slide="next"></a>
+        </span>
+    </h4>
+    <div id="myCarousel-1" class="carousel slide">
+        <div class="carousel-inner">
+            @for (int i = 0; i < 6; i += 3)
+            {
+                SanPham product1 = listRelatedProducts[i];
+                SanPham product2 = listRelatedProducts[i + 1];
+                SanPham product3 = listRelatedProducts[i + 2];
+                OnlineShopDBEntities db = new OnlineShopDBEntities();
+                var sProduct1 = db.SanPhamDacBiets.SingleOrDefault(item => item.MaSP == product1.MaSP);
+                var sProduct2 = db.SanPhamDacBiets.SingleOrDefault(item => item.MaSP == product2.MaSP);
+                var sProduct3 = db.SanPhamDacBiets.SingleOrDefault(item => item.MaSP == product3.MaSP);
+                var price1 = product1.DonGia;
+                var price2 = product2.DonGia;
+                var price3 = product3.DonGia;
+                var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+                if (i == 0)
+                {
+                    <div class="active item">
+                        <ul class="thumbnails listing-products">
+                            <li class="span3">
+                                <div class="product-box">
+                                    <span class="sale_tag"></span>
+                                    <p><a href="@Url.Action("ProductDetail", "Product", new { id = product1.MaSP })"><img src="~/Assets/images/products/@product1.HinhAnh" +".jpg" alt=""></a></p>
+                                    <a href="@Url.Action("LoadProductsByMaLoaiSP", "Product", new { @maLoaiSP = product1.MaLoaiSP })" class="category">@product1.LoaiSanPham.TenLoai</a><br>
+                                    <a href="@Url.Action("ProductDetail", "Product", new { id = product1.MaSP })" class="title">@product1.TenSP</a><br>
+                                    @if (sProduct1 != null)
+                                    {
+                                        if (sProduct1.GiamGia > 0)
+                                        {
+                                            <div class="product-box__sale">
+                                                <span class="product-box__sale-value">@sProduct1.GiamGia%</span>
+                                                <span class="product-box__sale__sale-label">GIẢM</span>
+                                            </div>
+                                            <p class="price text-warning" style="text-decoration:line-through">@String.Format(info, "{0:c}", price1)</p>
+                                            <p class="price" style="color:red">@String.Format(info, "{0:c}", price1 - price1 * sProduct1.GiamGia / 100)</p>
+                                        }
+                                        if (sProduct1.UuThich)
+                                        {
+                                            <div class="product-box__favourite">
+                                                <i class="fas fa-check"></i>
+                                                <span class="">Yêu thích</span>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <p class="price text-warning">@String.Format(info, "{0:c}", price1)</p>
+                                    }
+                                </div>
+                            </li>
+                            <li class="span3">
+                                <div class="product-box">
+                                    <span class="sale_tag"></span>
+                                    <p><a href="@Url.Action("ProductDetail", "Product", new { id = product2.MaSP })"><img src="~/Assets/images/products/@product2.HinhAnh" +".jpg" alt=""></a></p>
+                                    <a href="@Url.Action("LoadProductsByMaLoaiSP", "Product", new { @maLoaiSP = product2.MaLoaiSP })" class="category">@product2.LoaiSanPham.TenLoai</a><br>
+                                    <a href="@Url.Action("ProductDetail", "Product", new { id = product1.MaSP })" class="title">@product2.TenSP</a><br>
+                                    @if (sProduct2 != null)
+                                    {
+                                        if (sProduct2.GiamGia > 0)
+                                        {
+                                            <div class="product-box__sale">
+                                                <span class="product-box__sale-value">@sProduct2.GiamGia%</span>
+                                                <span class="product-box__sale__sale-label">GIẢM</span>
+                                            </div>
+                                            <p class="price text-warning" style="text-decoration:line-through">@String.Format(info, "{0:c}", price1)</p>
+                                            <p class="price" style="color:red">@String.Format(info, "{0:c}", price1 - price2 * sProduct2.GiamGia / 100)</p>
+                                        }
+                                        if (sProduct2.UuThich)
+                                        {
+                                            <div class="product-box__favourite">
+                                                <i class="fas fa-check"></i>
+                                                <span class="">Yêu thích</span>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <p class="price text-warning">@String.Format(info, "{0:c}", price2)</p>
+                                    }
+                                </div>
+                            </li>
+                            <li class="span3">
+                                <div class="product-box">
+                                    <span class="sale_tag"></span>
+                                    <p><a href="@Url.Action("ProductDetail", "Product", new { id = product3.MaSP })"><img src="~/Assets/images/products/@product3.HinhAnh" +".jpg" alt=""></a></p>
+                                    <a href="@Url.Action("LoadProductsByMaLoaiSP", "Product", new { @maLoaiSP = product3.MaLoaiSP })" class="category">@product3.LoaiSanPham.TenLoai</a><br>
+                                    <a href="@Url.Action("ProductDetail", "Product", new { id = product3.MaSP })" class="title">@product3.TenSP</a><br>
+                                    @if (sProduct3 != null)
+                                    {
+                                        if (sProduct3.GiamGia > 0)
+                                        {
+                                            <div class="product-box__sale">
+                                                <span class="product-box__sale-value">@sProduct3.GiamGia%</span>
+                                                <span class="product-box__sale__sale-label">GIẢM</span>
+                                            </div>
+                                            <p class="price text-warning" style="text-decoration:line-through">@String.Format(info, "{0:c}", price3)</p>
+                                            <p class="price" style="color:red">@String.Format(info, "{0:c}", price3 - price3 * sProduct3.GiamGia / 100)</p>
+                                        }
+                                        if (sProduct3.UuThich)
+                                        {
+                                            <div class="product-box__favourite">
+                                                <i class="fas fa-check"></i>
+                                                <span class="">Yêu thích</span>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <p class="price text-warning">@String.Format(info, "{0:c}", price3)</p>
+                                    }
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                }
+                else
+                {
+                    <div class="item">
+                        <ul class="thumbnails listing-products">
+                            <li class="span3">
+                                <div class="product-box">
+                                    <span class="sale_tag"></span>
+                                    <p><a href="@Url.Action("ProductDetail", "Product", new { id = product1.MaSP })"><img src="~/Assets/images/products/@product1.HinhAnh" +".jpg" alt=""></a></p>
+                                    <a href="@Url.Action("LoadProductsByMaLoaiSP", "Product", new { @maLoaiSP = product1.MaLoaiSP })" class="category">@product1.LoaiSanPham.TenLoai</a><br>
+                                    <a href="@Url.Action("ProductDetail", "Product", new { id = product1.MaSP })" class="title">@product1.TenSP</a><br>
+                                    @if (sProduct1 != null)
+                                    {
+                                        if (sProduct1.GiamGia > 0)
+                                        {
+                                            <div class="product-box__sale">
+                                                <span class="product-box__sale-value">@sProduct1.GiamGia%</span>
+                                                <span class="product-box__sale__sale-label">GIẢM</span>
+                                            </div>
+                                            <p class="price text-warning" style="text-decoration:line-through">@String.Format(info, "{0:c}", price1)</p>
+                                            <p class="price" style="color:red">@String.Format(info, "{0:c}", price1 - price1 * sProduct1.GiamGia / 100)</p>
+                                        }
+                                        if (sProduct1.UuThich)
+                                        {
+                                            <div class="product-box__favourite">
+                                                <i class="fas fa-check"></i>
+                                                <span class="">Yêu thích</span>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <p class="price text-warning">@String.Format(info, "{0:c}", price1)</p>
+                                    }
+                                </div>
+                            </li>
+                            <li class="span3">
+                                <div class="product-box">
+                                    <span class="sale_tag"></span>
+                                    <p><a href="@Url.Action("ProductDetail", "Product", new { id = product2.MaSP })"><img src="~/Assets/images/products/@product2.HinhAnh" +".jpg" alt=""></a></p>
+                                    <a href="@Url.Action("LoadProductsByMaLoaiSP", "Product", new { @maLoaiSP = product2.MaLoaiSP })" class="category">@product2.LoaiSanPham.TenLoai</a><br>
+                                    <a href="@Url.Action("ProductDetail", "Product", new { id = product1.MaSP })" class="title">@product2.TenSP</a><br>
+                                    @if (sProduct2 != null)
+                                    {
+                                        if (sProduct2.GiamGia > 0)
+                                        {
+                                            <div class="product-box__sale">
+                                                <span class="product-box__sale-value">@sProduct2.GiamGia%</span>
+                                                <span class="product-box__sale__sale-label">GIẢM</span>
+                                            </div>
+                                            <p class="price text-warning" style="text-decoration:line-through">@String.Format(info, "{0:c}", price1)</p>
+                                            <p class="price" style="color:red">@String.Format(info, "{0:c}", price1 - price2 * sProduct2.GiamGia / 100)</p>
+                                        }
+                                        if (sProduct2.UuThich)
+                                        {
+                                            <div class="product-box__favourite">
+                                                <i class="fas fa-check"></i>
+                                                <span class="">Yêu thích</span>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <p class="price text-warning">@String.Format(info, "{0:c}", price2)</p>
+                                    }
+                                </div>
+                            </li>
+                            <li class="span3">
+                                <div class="product-box">
+                                    <span class="sale_tag"></span>
+                                    <p><a href="@Url.Action("ProductDetail", "Product", new { id = product3.MaSP })"><img src="~/Assets/images/products/@product3.HinhAnh" +".jpg" alt=""></a></p>
+                                    <a href="@Url.Action("LoadProductsByMaLoaiSP", "Product", new { @maLoaiSP = product3.MaLoaiSP })" class="category">@product3.LoaiSanPham.TenLoai</a><br>
+                                    <a href="@Url.Action("ProductDetail", "Product", new { id = product3.MaSP })" class="title">@product3.TenSP</a><br>
+                                    @if (sProduct3 != null)
+                                    {
+                                        if (sProduct3.GiamGia > 0)
+                                        {
+                                            <div class="product-box__sale">
+                                                <span class="product-box__sale-value">@sProduct3.GiamGia%</span>
+                                                <span class="product-box__sale__sale-label">GIẢM</span>
+                                            </div>
+                                            <p class="price text-warning" style="text-decoration:line-through">@String.Format(info, "{0:c}", price3)</p>
+                                            <p class="price" style="color:red">@String.Format(info, "{0:c}", price3 - price3 * sProduct3.GiamGia / 100)</p>
+                                        }
+                                        if (sProduct3.UuThich)
+                                        {
+                                            <div class="product-box__favourite">
+                                                <i class="fas fa-check"></i>
+                                                <span class="">Yêu thích</span>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <p class="price text-warning">@String.Format(info, "{0:c}", price3)</p>
+                                    }
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .product-box__sale {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 40px;
+        height: 36px;
+        border-top-right-radius: 3px;
+        background-color: rgba(255,216,64,0.93);
+        text-align: center;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 12px;
+        padding: 4px 0 3px 0;
+    }
+
+    .product-box__sale-value {
+        color: #ee4d2d;
+    }
+
+    .product-box__sale-label {
+        margin: 4px 0px;
+        display: block;
+        color: var(--white-color);
+    }
+
+    .product-box__sale::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 0;
+        border-width: 0px 20px 5px 20px;
+        border-style: solid;
+        border-color: transparent rgba(255,216,64,0.93) transparent rgba(255,216,64,0.93);
+    }
+
+    .product-box__favourite {
+        position: absolute;
+        top: 10px;
+        left: -5px;
+        color: #EE4D2D;
+        background-color: #EE4D2D;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 17px;
+        padding-right: 4px;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+
+    .product-box__favourite span {
+        color: white;
+    }
+
+    .product-box__favourite::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -4px;
+        border-top: 4px solid #EE4D2D;
+        border-left: 4px solid transparent;
+        filter: brightness(70%);
+    }
+
+    .product-box__favourite i {
+        font-size: 0.9rem;
+        margin: 0 1px 0 4px;
+        color: white;
+    }
+</style>

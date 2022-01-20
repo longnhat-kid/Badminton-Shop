@@ -1,0 +1,15 @@
+﻿@model Array
+
+
+@{
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    double calPrice = double.Parse(Model.GetValue(1).ToString());
+    int discount = int.Parse(Model.GetValue(0).ToString());
+}
+
+<p class="cart-total right">
+    <strong>Tổng phụ</strong>:	@String.Format(info, "{0:c}", calPrice)<br>
+    <strong>Giảm giá</strong>: @String.Format(info, "{0:c}", calPrice*discount/100)<br>
+    <strong>Phí vận chuyển (17.5%)</strong>: @String.Format(info, "{0:c}", 17500)<br>
+    <strong>Tổng cộng</strong>: @String.Format(info, "{0:c}", calPrice - calPrice * discount / 100 + 17500)<br>
+</p>

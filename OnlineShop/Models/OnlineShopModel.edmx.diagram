@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3314760b13bf4dd684603cc848a22f06" Name="Diagram1" ZoomLevel="82">
+        <EntityTypeShape EntityType="OnlineShopDBModel.BinhLuan" Width="1.5" PointX="5.25" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineShopDBModel.ChiTietDonDatHang" Width="1.5" PointX="8.25" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineShopDBModel.ChiTietPhieuNhap" Width="1.5" PointX="5.25" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineShopDBModel.DonDatHang" Width="1.5" PointX="6" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineShopDBModel.GioHang" Width="1.5" PointX="5.25" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineShopDBModel.KhachHang" Width="1.5" PointX="5.25" PointY="19.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineShopDBModel.LoaiSanPham" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineShopDBModel.LoaiThanhVien" Width="1.5" PointX="0.75" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineShopDBModel.NhaCungCap" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineShopDBModel.NhaSanXuat" Width="1.5" PointX="0.75" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineShopDBModel.PhieuNhap" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineShopDBModel.SanPham" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineShopDBModel.SanPhamGioHang" Width="1.5" PointX="7.5" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineShopDBModel.ThanhVien" Width="1.5" PointX="3" PointY="14.375" IsExpanded="true" />
+        <AssociationConnector Association="OnlineShopDBModel.FK_BinhLuan_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineShopDBModel.FK_BinhLuan_ToTable_1" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineShopDBModel.FK_ChiTietDonDatHang_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineShopDBModel.FK_ChiTietDonDatHang_ToTable_1" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineShopDBModel.FK_ChiTietPhieuNhap_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineShopDBModel.FK_ChiTietPhieuNhap_ToTable_1" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineShopDBModel.FK_DonDatHang_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineShopDBModel.FK_GioHang_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineShopDBModel.FK_SanPhamGioHang_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineShopDBModel.FK_KhachHang_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineShopDBModel.FK_SanPham_LoaiSP" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineShopDBModel.FK_ThanhVien_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineShopDBModel.FK_PhieuNhap_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineShopDBModel.FK_SanPham_NhaCC" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineShopDBModel.FK_SanPham_NhaSX" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="OnlineShopDBModel.BoSuuTap" Width="1.5" PointX="8.25" PointY="8.625" />
+        <AssociationConnector Association="OnlineShopDBModel.FK_BoSuuTap_ToTable" />
+        <AssociationConnector Association="OnlineShopDBModel.FK_BoSuuTap_ToTable_1" />
+        <EntityTypeShape EntityType="OnlineShopDBModel.MaCode" Width="1.5" PointX="10.375" PointY="0.75" />
+        <EntityTypeShape EntityType="OnlineShopDBModel.MaGiamGia" Width="1.5" PointX="10.375" PointY="3.75" />
+        <EntityTypeShape EntityType="OnlineShopDBModel.SanPhamDacBiet" Width="1.5" PointX="5.25" PointY="24" />
+        <AssociationConnector Association="OnlineShopDBModel.FK_SanPhamDacBiet_ToTable" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

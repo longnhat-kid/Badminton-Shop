@@ -1,0 +1,149 @@
+﻿@using OnlineShop.Models
+@model IEnumerable<OnlineShop.Models.SanPham>
+
+@{ 
+    int productCounter = 1;
+    int pageSize = 6;
+    int pageCounter = 1;
+}
+
+<ul class="thumbnails listing-products">
+    @foreach (var product in Model)
+    {
+        OnlineShopDBEntities db = new OnlineShopDBEntities();
+        var sProduct = db.SanPhamDacBiets.SingleOrDefault(item => item.MaSP == product.MaSP);
+        var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+        var price = product.DonGia;
+        <li class="@Url.Content("span3 listing-products__item page" + pageCounter)">
+            <div class="product-box" style="position: relative; border-radius: 3px;">
+                <span class="sale_tag"></span>
+                <p><a href="@Url.Action("ProductDetail", "Product", new { id = product.MaSP })"><img src="~/Assets/images/products/@product.HinhAnh" +".jpg" alt=""></a></p>
+                <a href="@Url.Action("LoadProductsByMaLoaiSP", "Product", new { @maLoaiSP = product.MaLoaiSP })" class="category">@product.LoaiSanPham.TenLoai</a><br>
+                <a href="@Url.Action("ProductDetail", "Product", new { id = product.MaSP })" class="title">@product.TenSP</a><br>
+                @if (sProduct != null)
+                {
+                    if (sProduct.GiamGia > 0)
+                    {
+                        <div class="product-box__sale">
+                            <span class="product-box__sale-value">@sProduct.GiamGia%</span>
+                            <span class="product-box__sale__sale-label">GIẢM</span>
+                        </div>
+                        <p class="price text-warning" style="text-decoration:line-through">@String.Format(info, "{0:c}", price)</p>
+                        <p class="price" style="color:red">@String.Format(info, "{0:c}", price - price * sProduct.GiamGia / 100)</p>
+                    }
+                    if (sProduct.UuThich)
+                    {
+                        <div class="product-box__favourite">
+                            <i class="fas fa-check"></i>
+                            <span class="">Yêu thích</span>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p class="price text-warning">@String.Format(info, "{0:c}", price)</p>
+                }
+
+            </div>
+        </li>
+        if (productCounter % pageSize == 0)
+        {
+            pageCounter++;
+        }
+        productCounter++;
+    }
+</ul>
+
+<hr>
+<div class="pagination pagination-small pagination-centered">
+    <ul>
+        @for (int i = 1; i < pageCounter; i++)
+        {
+            <li id="@Url.Content("page"+i+"Link")"><a class="page" id="@Url.Content("page"+i)" style="cursor:pointer">@i</a></li>
+        }
+    </ul>
+</div>
+
+<script>
+    $(".listing-products__item").hide()
+    $(".page1").show()
+    $("#page1Link").addClass("active")
+    $(".page").click((event) => {
+        $(".listing-products__item").hide()
+        var targetId = event.target.id;
+        $("li[id^='page']").removeClass("active");
+        $("#" + targetId + "Link").addClass("active");
+        $("." + targetId).show()
+    })
+</script>
+
+<style>
+    .product-box__sale {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 40px;
+        height: 36px;
+        border-top-right-radius: 3px;
+        background-color: rgba(255,216,64,0.93);
+        text-align: center;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 12px;
+        padding: 4px 0 3px 0;
+    }
+
+    .product-box__sale-value {
+        color: #ee4d2d;
+    }
+
+    .product-box__sale-label {
+        margin: 4px 0px;
+        display: block;
+        color: var(--white-color);
+    }
+
+    .product-box__sale::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 0;
+        border-width: 0px 20px 5px 20px;
+        border-style: solid;
+        border-color: transparent rgba(255,216,64,0.93) transparent rgba(255,216,64,0.93);
+    }
+
+    .product-box__favourite {
+        position: absolute;
+        top: 10px;
+        left: -5px;
+        color: #EE4D2D;
+        background-color: #EE4D2D;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 17px;
+        padding-right: 4px;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+
+    .product-box__favourite span {
+        color: white;
+    }
+
+    .product-box__favourite::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -4px;
+        border-top: 4px solid #EE4D2D;
+        border-left: 4px solid transparent;
+        filter: brightness(70%);
+    }
+
+    .product-box__favourite i {
+        font-size: 0.9rem;
+        margin: 0 1px 0 4px;
+        color: white;
+    }
+</style>

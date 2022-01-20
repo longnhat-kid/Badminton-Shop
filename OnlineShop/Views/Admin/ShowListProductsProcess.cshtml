@@ -1,0 +1,98 @@
+﻿@using PagedList.Mvc
+
+@model IEnumerable<OnlineShop.Models.ChiTietDonDatHang>
+
+@{
+    int productCounter = 1;
+    int pageSize = 10;
+    int pageCounter = 1;
+}
+
+
+<div class="card mb-4">
+    <div class="card-header">
+        <svg class="svg-inline--fa fa-table fa-w-16 me-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="table" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M464 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zM224 416H64v-96h160v96zm0-160H64v-96h160v96zm224 160H288v-96h160v96zm0-160H288v-96h160v96z"></path></svg><!-- <i class="fas fa-table me-1"></i> Font Awesome fontawesome.com -->
+        Danh sách sản phẩm
+    </div>
+    <div class="card-body">
+        <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+            <div class="dataTable-top">
+            </div><div class="dataTable-container">
+                <table id="datatablesSimple" class="dataTable-table">
+                    <thead>
+                        <tr>
+                            <th data-sortable="" style="width: 19.5512%;">
+                                Tài khoản đặt hàng
+                            </th>
+                            <th data-sortable="" style="width: 18.344%;">
+                                Ngày đặt hàng
+                            </th>
+                            <th data-sortable="" style="width: 19.674%;">
+                                Ngày giao hàng
+                            </th>
+                            <th data-sortable="" style="width: 9.8731%;">
+                                Mã sản phẩm
+                            </th>
+                            <th data-sortable="" style="width: 20.1569%;">
+                                Tên sản phẩm
+                            </th>
+                            <th data-sortable="" style="width: 11.4668%;">
+                                Hoàn thành
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var product in Model)
+                        {
+                            <tr class="@Url.Content("listing-user__item page" + pageCounter)">
+                                <td>@product.DonDatHang.ThanhVien.TaiKhoan</td>
+                                <td>@product.DonDatHang.NgayDat</td>
+                                <td>@product.DonDatHang.NgayGiao</td>
+                                <td>@product.MaSP</td>
+                                <td>@product.TenSP</td>
+                                <td><button type="submit" class="btn-success">Hoàn thành</button></td>
+                            </tr>
+                            if (productCounter % pageSize == 0)
+                            {
+                                pageCounter++;
+                            }
+                            productCounter++;
+                        }
+
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="dataTable-bottom">
+                <nav class="dataTable-pagination">
+                    <ul class="dataTable-pagination-list">
+                        @for (int i = 1; i < pageCounter; i++)
+                        {
+                            <li id="@Url.Content("page"+i+"Link")"><a class="page" id="@Url.Content("page"+i)" style="cursor:pointer">@i</a></li>
+                        }
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(".listing-user__item").hide()
+    $(".page1").show()
+    $("#page1Link").addClass("active")
+    $(".page").click((event) => {
+        $(".listing-user__item").hide()
+        var targetId = event.target.id;
+        $("li[id^='page']").removeClass("active");
+        $("#" + targetId + "Link").addClass("active");
+        $("." + targetId).show()
+    })
+    $('#keyword').bind('keyup', function (event) {
+        if (event.keyCode == 13) {
+            $(this).closest("form").submit();
+        }
+    });
+</script>
+

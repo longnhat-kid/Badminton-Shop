@@ -1,0 +1,121 @@
+﻿@using CaptchaMvc.HtmlHelpers
+@using CaptchaMvc
+@model OnlineShop.Models.ThanhVien
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_ProductDetailLayout.cshtml";
+}
+
+<div class="modal hide fade in" id="myModal">
+    <div class="modal-header">
+        <h4>Thông báo</h4>
+    </div>
+    <div class="modal-body">
+        <p class="text-info" style="font-size: 15px">@ViewBag.Message</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">Close</a>
+    </div>
+</div>
+
+
+<div class="span9">
+    <h4 class="title"><span class="text"><strong>Đăng kí</strong></span></h4>
+    <form method="post" class="form-stacked">
+        <fieldset>
+            <div class="row">
+                <div class="span3">
+                    <img src="~/Assets/images/register.png" style="width:100%">
+                </div>
+
+                <div class="span3">
+                    <div class="control-group">
+                        <label class="control-label">Họ và tên:</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.HoTen, new {@class = "input-large", @placeholder = "eg. Nguyễn Văn A" })
+                            @Html.ValidationMessageFor(model => model.HoTen, "", new { @style = "display: block; color: red; font-style: italic; font-size: 13px" }) 
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Tên đăng nhập:</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.TaiKhoan, new { @class = "input-large", @placeholder = "eg. username123" })
+                            @Html.ValidationMessageFor(model => model.TaiKhoan, "", new { @style = "display: block; color: red; font-style: italic; font-size: 13px" })
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Địa chỉ email:</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.Email, new { @class = "input-large", @placeholder = "eg. username123@gmail.com" })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @style = "display: block; color: red; font-style: italic; font-size: 13px" })
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Số điện thoại:</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.SoDienThoai, new { @class = "input-large", @placeholder = "eg. 0379505900" })
+                            @Html.ValidationMessageFor(model => model.SoDienThoai, "", new { @style = "display: block; color: red; font-style: italic; font-size: 13px" })
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Địa chỉ:</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.DiaChi, new { @class = "input-large", @placeholder = "eg. Hồ Chí Minh" })
+                            @Html.ValidationMessageFor(model => model.DiaChi, "", new { @style = "display: block; color: red; font-style: italic; font-size: 13px" })
+                        </div>
+                    </div>
+                </div>
+                <div class="span3">
+                    <div class="control-group">
+                        <label class="control-label">Câu hỏi bí mật:</label>
+                        <div class="controls">
+                            @Html.DropDownList("CauHoi", null, new { style = "width: 90%" })
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Câu trả lời:</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.CauTraLoi, new { @class = "input-large" })
+                            @Html.ValidationMessageFor(model => model.CauTraLoi, "", new { @style = "display: block; color: red; font-style: italic; font-size: 13px" })
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Mật khẩu:</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.MatKhau, new { @type="password", @class = "input-large", @placeholder = "eg. Nguyễn Văn A" })
+                            @Html.ValidationMessageFor(model => model.MatKhau, "", new { @style = "display: block; color: red; font-style: italic; font-size: 13px" })
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Nhập lại mật khẩu:</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.NhapLaiMatKhau, new { @type = "password", @class = "input-large", @placeholder = "eg. Nguyễn Văn A" })
+                            @Html.ValidationMessageFor(model => model.NhapLaiMatKhau, "", new { @style = "display: block; color: red; font-style: italic; font-size: 13px" })
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            @Html.MathCaptcha("Tải lại", "Câu trả lời là:")
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <hr>
+            <div class="actions"><input tabindex="9" class="btn btn-inverse large pull-right" type="submit" value="Đăng kí"></div>
+        </fieldset>
+    </form>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(() => {
+        @{
+            if (ViewBag.Message != null) {
+                <text>
+                $('#myModal').modal('show')
+                </text>
+            }
+        }
+    });
+</script>

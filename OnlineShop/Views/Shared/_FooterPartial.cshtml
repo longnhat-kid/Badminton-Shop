@@ -1,0 +1,32 @@
+﻿@model IEnumerable<OnlineShop.Models.SanPham>
+
+<section id="footer-bar">
+    <div class="row">
+        <div class="span3">
+            <h4>ĐIỀU HƯỚNG</h4>
+            <ul class="nav">
+                <li><a href="@Url.Action("Index", "Home")">Trang chủ</a></li>
+                <li><a href="@Url.Action("Register","User")">Đăng kí</a></li>
+                <li><a href="" data-toggle="modal" data-target="#loginModal">Đăng nhập</a></li>
+            </ul>
+        </div>
+        <div class="span4">
+            <h4>DANH MỤC SẢN PHẨM</h4>
+            <ul class="nav">
+                @foreach (var group in Model.GroupBy(product => product.LoaiSanPham))
+                {
+                    <li class="">
+                        <a href="@Url.Action("LoadProductsByMaLoaiSP", "Product", new { @maLoaiSP = group.Key.MaLoaiSP })" class="sf-with-ul">@group.Key.TenLoai</a>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="span5">
+            <p class="logo"><img src="~/Assets/images/logo.png" class="site_logo" alt=""></p>
+        </div>
+    </div>
+</section>
+<section id="copyright" style="text-align: center">
+    <span>Copyright 2013 bootstrappage template  All right reserved.</span>
+</section>
+

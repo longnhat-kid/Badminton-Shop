@@ -1,0 +1,143 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Long Nhật Badminton Shop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <!--[if ie]><meta content='IE=8' http-equiv='X-UA-Compatible'/><![endif]-->
+    <!-- bootstrap -->
+    <link href="~/Bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <link href="~/Assets/css/bootstrappage.css" rel="stylesheet">
+
+    <!-- global styles -->
+    <link href="~/Assets/css/flexslider.css" rel="stylesheet">
+    <link href="~/Assets/css/main.css" rel="stylesheet">
+
+    <!-- scripts -->
+    <script src="~/Assets/js/jquery-1.7.2.min.js"></script>
+    <script src="~/Bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Assets/js/superfish.js"></script>
+    <script src="~/Assets/js/jquery.scrolltotop.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="https://kit.fontawesome.com/c995d51d6c.js" crossorigin="anonymous"></script>
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    @Html.Partial("~/Views/Shared/_HeaderPartial.cshtml")
+    <div id="wrapper" class="container">
+        <section class="navbar main-menu">
+            @Html.Action("NavigationPartial", "Home")
+        </section>
+        <section class="homepage-slider" id="home-slider">
+            <div class="flexslider">
+                <ul class="slides">
+                    <li class="" style="width: 100%; float: left; margin-right: -100%; position: relative; display: none;">
+                        <img src="~/Assets/images/carousel/banner-1.jpg" alt="">
+                    </li>
+                    <li style="width: 100%; float: left; margin-right: -100%; position: relative; display: list-item;" class="flex-active-slide">
+                        <img src="~/Assets/images/carousel/banner-2.jpg" alt="">
+                    </li>
+                </ul>
+                <ul class="flex-direction-nav"><li><a class="flex-prev" href="#">Previous</a></li><li><a class="flex-next" href="#">Next</a></li></ul>
+            </div>
+        </section>
+        <section class="header_text">
+            Chúng tôi tự hào là một trong những nhà phân phối dụng cụ cầu lông số 1 Việt Nam.
+            <br>Đừng ngần ngại đặt hàng ngay hôm nay.
+        </section>
+        <section class="main-content">
+            <div class="row">
+                <div class="span12">
+                    @Html.Action("LoadNewProduct", "Product")
+                    <br>
+                    @Html.Action("LoadOldProduct", "Product")
+                    <div class="row feature_box">
+                        <div class="span4">
+                            <div class="service">
+                                <div class="responsive">
+                                    <img src="~/Assets/images/feature_img_2.png" alt="">
+                                    <h4>SẢN PHẨM <strong>CHẤT LƯỢNG</strong></h4>
+                                    <p>Chúng tôi đảm bảo cung cấp đến quý khách những sản phẩm chính hãng với chất lượng tốt nhất.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span4">
+                            <div class="service">
+                                <div class="customize">
+                                    <img src="~/Assets/images/feature_img_1.png" alt="">
+                                    <h4>GIAO HÀNG <strong>NHANH CHÓNG</strong></h4>
+                                    <p>Với phương châm nhanh-chuẩn-tốt, chúng tôi nhanh chóng giao hàng đến quý khách trong thời gian nhanh nhất.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span4">
+                            <div class="service">
+                                <div class="support">
+                                    <img src="~/Assets/images/feature_img_3.png" alt="">
+                                    <h4>HỖ TRỢ <strong>24/7</strong></h4>
+                                    <p>Với đội ngũ tư vấn viên chuyên nghiệp, tâm huyết, chúng tôi luôn có mặt để hỗ trợ quý khách.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="our_client">
+            <h4 class="title"><span class="text">Manufactures</span></h4>
+            <div class="row">
+                <div class="span2">
+                    <a href="#"><img alt="" src="~/Assets/images/clients/14.png"></a>
+                </div>
+                <div class="span2">
+                    <a href="#"><img alt="" src="~/Assets/images/clients/35.png"></a>
+                </div>
+                <div class="span2">
+                    <a href="#"><img alt="" src="~/Assets/images/clients/1.png"></a>
+                </div>
+                <div class="span2">
+                    <a href="#"><img alt="" src="~/Assets/images/clients/2.png"></a>
+                </div>
+                <div class="span2">
+                    <a href="#"><img alt="" src="~/Assets/images/clients/3.png"></a>
+                </div>
+                <div class="span2">
+                    <a href="#"><img alt="" src="~/Assets/images/clients/4.png"></a>
+                </div>
+            </div>
+        </section>
+        @Html.Action("Footer", "Home")
+    </div>
+    <script src="~/Assets/js/common.js"></script>
+    <script src="~/Assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(document).ready(function () {
+                $('.flexslider').flexslider({
+                    animation: "fade",
+                    slideshowSpeed: 4000,
+                    animationSpeed: 600,
+                    controlNav: false,
+                    directionNav: true,
+                    controlsContainer: ".flex-container" // the container that holds the flexslider
+                });
+            });
+        });
+    </script>
+
+    <div id="topcontrol" title="Scroll Back to Top" style="position: fixed; bottom: 12px; right: 0px; opacity: 1; cursor: pointer;"><img src="~/Assets/images/gotop.png" style="width:40px; height:40px; margin-top: 25px; margin-right: 17px;"></div>
+</body>
+</html>

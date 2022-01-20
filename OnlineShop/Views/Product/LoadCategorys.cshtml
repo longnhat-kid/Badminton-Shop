@@ -1,0 +1,9 @@
+﻿@model IEnumerable<OnlineShop.Models.SanPham>
+
+<ul class="nav nav-list">
+    <li class="nav-header">LOẠI SẢN PHẨM</li>
+    @foreach (var groupProducer in Model.GroupBy(product => product.LoaiSanPham))
+    {
+        <li><a href="@Url.Action("LoadProductsByMaLoaiSP", "Product", new { @maLoaiSP = groupProducer.Key.MaLoaiSP })">@groupProducer.Key.TenLoai</a></li>
+    }
+</ul>

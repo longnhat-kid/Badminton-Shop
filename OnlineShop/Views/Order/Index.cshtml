@@ -1,0 +1,154 @@
+﻿@using OnlineShop.Models
+
+@model DonDatHang
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div class="modal hide fade in" id="myModal">
+    <div class="modal-header">
+        <h4>Thông báo</h4>
+    </div>
+    <div class="modal-body">
+        @if (ViewBag.isOrderSuccess != null && ViewBag.isOrderSuccess)
+        {
+            <p class="text-info" style="font-size: 15px">
+                Đặt hàng thành công, đơn hàng sẽ được giao đến bạn trong vòng<span style="color: red; font-style: italic; font-size: 13px"> 7 ngày.</span >
+            </p>
+
+        }
+        else if(ViewBag.isOrderSuccess != null)
+        {
+            <p class="text-info" style="font-size: 15px">
+                Đặt hàng <span style="color: red; font-style: italic; font-size: 13px"> thất bại,</span>, vui lòng kiểm tra lại <a href="/Cart/Index" class="text-success">Giỏ hàng</a>
+            </p>
+        }
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">Close</a>
+    </div>
+</div>
+
+@using (Html.BeginForm("ProcessOrder", "Order"))
+{
+    <section class="main-content">
+        <div class="row">
+            <div class="span12">
+                <div class="accordion" id="accordion2">
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">Tài khoản &amp; Chi tiết đặt hàng</a>
+                        </div>
+                        <div id="collapseTwo" class="accordion-body in collapse">
+                            <div class="accordion-inner">
+                                <div class="row-fluid">
+                                    <div class="span6">
+                                        <span style="display: block; color: red; font-style: italic; font-size: 13px">Nếu các thông tin bên dưới bỏ trống, hệ thống sẽ ghi nhận thông tin tài khoản ban đầu.</span>
+                                        <h4>Thông tin cá nhân</h4>
+                                        <div class="control-group">
+                                            <label class="control-label">Họ và tên: </label>
+                                            <div class="controls">
+                                                @Html.TextBoxFor(model => model.HoVaTen, new { @class = "input-xlarge", @placeholder = "" })
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">Địa chỉ email: </label>
+                                            <div class="controls">
+                                                @Html.TextBoxFor(model => model.Email, new { @class = "input-xlarge", @placeholder = "" })
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">Số điện thoại: </label>
+                                            <div class="controls">
+                                                @Html.TextBoxFor(model => model.SoDienThoai, new { @class = "input-xlarge", @placeholder = "" })
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">Fax: </label>
+                                            <div class="controls">
+                                                @Html.TextBoxFor(model => model.Fax, new { @class = "input-xlarge", @placeholder = "" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="span6">
+                                        <span style="display: block; color: red; font-style: italic; font-size: 13px">Các trường có dấu * bắt buộc phải nhập.</span>
+                                        <h4>Địa chỉ: </h4>
+                                        <div class="control-group">
+                                            <label class="control-label">Công ty/Trường học: </label>
+                                            <div class="controls">
+                                                @Html.TextBoxFor(model => model.CongTy, new { @class = "input-xlarge", @placeholder = "" })
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">Mã Công ty/Trường học:</label>
+                                            <div class="controls">
+                                                @Html.TextBoxFor(model => model.MaCongTy, new { @class = "input-xlarge", @placeholder = "" })
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label"><span class="required">*</span> Địa chỉ nhận hàng:</label>
+                                            <div class="controls">
+                                                @Html.TextBoxFor(model => model.DiaChiNhanHang, new { @class = "input-xlarge", @placeholder = "" })
+                                                @Html.ValidationMessageFor(model => model.DiaChiNhanHang, "", new { @style = "display: block; color: red; font-style: italic; font-size: 13px" })
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label"><span class="required">*</span> Địa chỉ phụ:</label>
+                                            <div class="controls">
+                                                @Html.TextBoxFor(model => model.DiaChiPhu, new { @class = "input-xlarge", @placeholder = "" })
+                                                @Html.ValidationMessageFor(model => model.DiaChiPhu, "", new { @style = "display: block; color: red; font-style: italic; font-size: 13px" })
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">Để lại lời nhắn</a>
+                        </div>
+                        <div id="collapseThree" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <div class="row-fluid">
+                                    <div class="control-group">
+                                        <label for="textarea" class="control-label">Lời nhắn</label>
+                                        <div class="controls">
+                                            @Html.TextAreaFor(model => model.LoiNhan, new { @class = "span12", @placeholder = "", @rows = "3", @id = "textarea" })
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-inverse pull-right" type="submit">
+                    Xác nhận đặt hàng
+                </button>
+            </div>
+            @Html.Hidden("NgayDat", DateTime.Now)
+            @Html.Hidden("NgayGiao", DateTime.Now.AddDays(7))
+            @Html.Hidden("MaTV", (Session["User"] as ThanhVien).MaTV)
+            @Html.Hidden("UuDai", int.Parse(Session["Discount"].ToString()))
+        </div>
+    </section>
+}
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(() => {
+        @{
+            if (ViewBag.isOrderSuccess != null) {
+                <text>
+                $('#myModal').modal('show')
+                </text>
+            }
+        }
+    });
+</script>

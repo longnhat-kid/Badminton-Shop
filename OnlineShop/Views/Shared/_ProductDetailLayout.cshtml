@@ -1,0 +1,89 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Long Nhật Badminton Shop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <!--[if ie]><meta content='IE=8' http-equiv='X-UA-Compatible'/><![endif]-->
+    <!-- bootstrap -->
+    <link href="~/Bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <link href="~/Assets/css/bootstrappage.css" rel="stylesheet" />
+
+    <!-- global styles -->
+    <link href="~/Assets/css/main.css" rel="stylesheet" />
+    <link href="~/Assets/css/jquery.fancybox.css" rel="stylesheet" />
+    <link href="~/Assets/xzoom.css" rel="stylesheet" />
+
+    <link href="~/Assets/css/flexslider.css" rel="stylesheet">
+    <link href="~/Assets/css/main.css" rel="stylesheet">
+
+    <!-- scripts -->
+    <script src="~/Assets/js/jquery-1.7.2.min.js"></script>
+    <script src="~/Bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Assets/js/superfish.js"></script>
+    <script src="~/Assets/xzoom.js"></script>
+    <script src="~/Assets/foundation.min.js"></script>
+    <script src="~/Assets/setup.js"></script>
+    <script src="~/Assets/js/jquery.scrolltotop.js"></script>
+    <script src="~/Assets/js/jquery.fancybox.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="https://kit.fontawesome.com/c995d51d6c.js" crossorigin="anonymous"></script>
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    @Html.Partial("~/Views/Shared/_HeaderPartial.cshtml")
+    <div id="wrapper" class="container">
+        <section class="navbar main-menu">
+            @Html.Action("NavigationPartial", "Home")
+        </section>
+        <section class="header_text sub">
+            <img class="pageBanner" src="~/Assets/images/pageBanner.jpg" alt="New products">
+        </section>
+        <section class="main-content">
+            <div class="row">
+                @RenderBody()
+                <div class="span3">
+                    <div class="block">
+                        @Html.Action("LoadCategorys", "Product")
+                        <br />
+                        @Html.Action("LoadProducers", "Product")
+                    </div>
+                    @Html.Action("LoadRandomProduct", "Product")
+                    <div class="block">
+                        <h4 class="title">Bán <strong>Chạy Nhất</strong></h4>
+                        @Html.Action("LoadBestSellerProducts", "Product")
+                    </div>
+                </div>
+            </div>
+        </section>
+        @Html.Action("Footer", "Home")
+    </div>
+    <script>
+        $(function () {
+            $('#myTab a:first').tab('show');
+            $('#myTab a').click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+            })
+        })
+        $(document).ready(function () {
+            $('.thumbnail').fancybox({
+                openEffect: 'none',
+                closeEffect: 'none'
+            });
+
+            $('#myCarousel-2').carousel({
+                interval: 2500
+            });
+        });
+    </script>
+</body>
+</html>

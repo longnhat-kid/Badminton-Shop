@@ -1,0 +1,24 @@
+﻿@model IEnumerable<OnlineShop.Models.SanPham>
+
+<div class="navbar-inner main-menu" style="padding-top: 10px">
+    <a href="@Url.Action("Index", "Home")" class="logo pull-left"><img src="~/Assets/images/logo.png" class="site_logo" alt=""></a>
+    <nav id="menu" class="pull-right">
+        <ul class="sf-js-enabled sf-shadow">
+            <li><a href="@Url.Action("Index", "Home")">Trang chủ</a></li>
+
+            @foreach (var group in Model.GroupBy(product => product.LoaiSanPham))
+            {
+                <li class="">
+                    <a href="@Url.Action("LoadProductsByMaLoaiSP", "Product", new { @maLoaiSP = group.Key.MaLoaiSP })" class="sf-with-ul">@group.Key.TenLoai</a>
+                    <ul>
+                        @foreach(var item in group.GroupBy(product => product.NhaSanXuat))
+                        {
+                            <li><a href="@Url.Action("LoadProducts", "Product", new { @maNSX = item.Key.MaNSX, @maLoaiSP = group.Key.MaLoaiSP })">@item.Key.TenNSX</a></li>
+                        }
+
+                    </ul>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>

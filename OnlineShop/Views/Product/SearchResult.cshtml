@@ -1,0 +1,51 @@
+﻿
+@model IEnumerable<OnlineShop.Models.SanPham>
+
+@{
+    ViewBag.Title = "LoadProducts";
+    Layout = "~/Views/Shared/_ProductDetailLayout.cshtml";
+}
+
+<div class="span9">
+    <div class="navbar-header right" style="width: 100%">
+        <label class="label label-important">Sắp xếp theo: </label>
+        @using (Ajax.BeginForm("SortSearchResult", "Product", new { @sKeyword = ViewBag.sKeyword }, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "sortResult" }, new { @style = "display:inline-block" }))
+        {
+            <select class="form-control" id="sortBy" name="sortBy">
+                <option value="1">
+                    Tên tăng dần
+                </option>
+                <option value="2">
+                    Tên giảm dần
+                </option>
+                <option value="3">
+                    Giá tăng dần
+                </option>
+                <option value="4">
+                    Giá giảm dần
+                </option>
+                <option value="5">
+                    Dưới 1.000.000đ
+                </option>
+                <option value="6">
+                    1.000.000đ - 2.000.000đ
+                </option>
+                <option value="7">
+                    Trên 2.000.000đ
+                </option>
+            </select>
+        }
+
+    </div>
+    <div id="sortResult">
+        @Html.Partial("~/Views/Product/SortSearchResult.cshtml", Model);
+    </div>
+</div>
+
+<script type="text/javascript">
+    $("#sortBy").change(function () {
+        $(this).parents("form").submit();
+    });
+</script>
+
+

@@ -1,0 +1,177 @@
+﻿@model OnlineShop.Models.SanPham
+
+@{
+    ViewBag.Title = "ProductDetail";
+    Layout = "~/Views/Shared/_ProductDetailLayout.cshtml";
+}
+
+<div class="span9">
+    <div class="row">
+        <div class="span4">
+            <a href="~/Assets/images/products/@Model.HinhAnh" class="thumbnail zoom xzoom-container" data-fancybox-group="group1" title="Description 1">
+                <img alt="" src="~/Assets/images/products/@Model.HinhAnh" class="xzoom xzoom-gallery" xoriginal="~/Assets/images/products/@Model.HinhAnh">
+            </a>
+            <ul class="thumbnails small">
+                <li class="span1">
+                    <a href="~/Assets/images/products/@Model.HinhAnhPhu1" class="thumbnail zoom" data-fancybox-group="group1" title="Description 2"><img src="~/Assets/images/products/@Model.HinhAnhPhu1" alt=""></a>
+                </li>
+                <li class="span1">
+                    <a href="~/Assets/images/products/@Model.HinhAnhPhu2" class="thumbnail zoom" data-fancybox-group="group1" title="Description 3"><img src="~/Assets/images/products/@Model.HinhAnhPhu2" alt=""></a>
+                </li>
+                <li class="span1">
+                    <a href="~/Assets/images/products/@Model.HinhAnhPhu3" class="thumbnail zoom" data-fancybox-group="group1" title="Description 4"><img src="~/Assets/images/products/@Model.HinhAnhPhu3" alt=""></a>
+                </li>
+                <li class="span1">
+                    <a href="~/Assets/images/products/@Model.HinhAnhPhu4" class="thumbnail zoom" data-fancybox-group="group1" title="Description 5"><img src="~/Assets/images/products/@Model.HinhAnhPhu4" alt=""></a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="span5">
+            <div>
+                <strong>Thương hiệu:</strong> <span>@Model.NhaSanXuat.TenNSX</span><br>
+                <strong>Mã sản phẩm:</strong> <span>@Model.MaSP</span><br>
+                <strong>Lượt xem:</strong> <span>@Model.LuotXem</span><br>
+                <strong>Lượt bình luận:</strong> <span>@Model.BinhLuans.Count</span><br>
+                <strong>Đã bán:</strong> <span>@Model.SoLanMua</span><br>
+                @{
+                    float remain = float.Parse(Model.SoLuongTon.ToString()) / float.Parse((Model.SoLuongTon + Model.SoLanMua).ToString()) * 100;
+                }
+                <strong>Số lượng còn: </strong><span>@Model.SoLuongTon</span><br>
+                @{
+                    var price = @Model.DonGia;
+                    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+                    <h4><strong>Đơn giá:<span style="color: red"> @String.Format(info, "{0:c}", price)</span></strong></h4>
+                }
+            </div>
+
+        </div>
+        <div class="span5">
+            @using (Ajax.BeginForm("AddToCart", "Cart", new { @maSP = Model.MaSP }, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "add-cart-notify" }, new { @class = "form-inline" }))
+            {
+                <p>&nbsp;</p>
+                <label>Số lượng:</label>
+                <input type="number" class="span1" value="1" min="1" name="quantity">
+                <button class="btn btn-success" type="submit">Thêm vào giỏ hàng</button>
+
+                <br />
+                <br />
+                <div id="add-cart-notify">
+
+                </div>
+            }
+            @using (Ajax.BeginForm("AddToLikeList", "User", new { @maSP = Model.MaSP }, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "add-cart-notify" }, new { @class = "form-inline" }))
+            {
+                <button class="btn btn-warning" type="submit">Thêm vào bộ sưu tập</button>
+            }
+
+        </div>
+        <div class="span5">
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">Để lại bình luận</a>
+                </div>
+                <div id="collapseThree" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <div class="row-fluid">
+                            @using (Ajax.BeginForm("SubmitComment", "User", new { @maSP = Model.MaSP }, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "commentTarget" }))
+                            {
+                                <div class="control-group">
+                                    <label for="textarea" class="control-label">Bình luận</label>
+                                    <div class="controls">
+                                        @Html.TextArea("comment", new { @class = "span12", @placeholder = "", @rows = "3", @id = "textarea" })
+                                    </div>
+                                    <button class="btn btn-success pull-right" type="submit">Gửi</button>
+                                    <br />
+                                    <br />
+                                    <div id="commentTarget">
+
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span9">
+            <ul class="nav nav-tabs" id="myTab">
+                <li class="active"><a href="#home">Mô tả</a></li>
+                <li class=""><a href="#profile">Bình luận về sản phẩm</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="home">@Model.MoTa</div>
+                <div class="tab-pane" id="profile">
+                    <table class="table table-striped table-hover table-bordered table-responsive pre-scrollable">
+                        <thead>
+                            <tr>
+                                <th>Tên người dùng</th>
+                                <th>Nội dung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var comment in Model.BinhLuans)
+                            {
+                                <tr>
+                                    <td>@comment.ThanhVien.HoTen</td>
+                                    <td>@comment.NoiDungBL</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        @Html.Action("LoadRelatedProducts", "Product", new { @maLoaiSP = Model.MaLoaiSP, @maNSX = Model.MaNSX })
+    </div>
+</div>
+
+<style>
+    .zoom:hover {
+        -ms-transform: scale(1.2); /* IE 9 */
+        -webkit-transform: scale(1.2); /* Safari 3-8 */
+        transform: scale(1.2);
+        box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+    }
+
+    .progress-bar {
+        float: left;
+        width: 0%;
+        height: 100%;
+        font-size: 12px;
+        line-height: 20px;
+        color: #fff;
+        text-align: center;
+        background-color: #337ab7;
+        -webkit-box-shadow: inset 0 -1px 0 rgb(0 0 0 / 15%);
+        box-shadow: inset 0 -1px 0 rgb(0 0 0 / 15%);
+        -webkit-transition: width .6s ease;
+        -o-transition: width .6s ease;
+        transition: width .6s ease;
+    }
+</style>
+
+<script src="~/Assets/js/common.js"></script>
+<script src="~/Assets/js/jquery.flexslider-min.js"></script>
+
+<script>
+
+    $("#main_image, .xzoom-gallery").xzoom();
+    $(function () {
+        $(document).ready(function () {
+            $('.flexslider').flexslider({
+                animation: "fade",
+                slideshowSpeed: 4000,
+                animationSpeed: 600,
+                controlNav: false,
+                directionNav: true,
+                controlsContainer: ".flex-container" // the container that holds the flexslider
+            });
+        });
+    });
+</script>
+
+

@@ -1,0 +1,58 @@
+﻿@model IEnumerable<OnlineShop.Models.SanPhamGioHang>
+
+<div class="accordion-group">
+    <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Sản phẩm đang xử lí</a>
+    </div>
+    <div id="collapseOne" class="accordion-body in collapse">
+        <div class="accordion-inner">
+            <div class="row-fluid">
+                <table class="table table-striped table-hover table-bordered table-responsive pre-scrollable">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Hình ảnh</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Đơn giá</th>
+                            <th>Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            double calPrice = 0;
+                            var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+                            int idx = 1;
+                        }
+                        @foreach (var product in Model)
+                        {
+                            <tr>
+                                <td>@idx</td>
+                                <td><a href="@Url.Action("ProductDetail", "Product", new { id = product.MaSP })"><img alt="" src="~/Assets/images/products/@product.HinhAnh"></a></td>
+                                <td>@product.TenSP</td>
+                                @Html.Hidden("MaSP", product.MaSP)
+                                <td><input type="number" class="input-mini" value="@product.SoLuong" name="SoLuong" min="1"></td>
+                                @{
+                                    var price = product.DonGia;
+                                    var totalPrice = product.DonGia * product.SoLuong;
+                                    calPrice += totalPrice;
+                                    <td>@String.Format(info, "{0:c}", price)</td>
+                                    <td>@String.Format(info, "{0:c}", totalPrice)</td>
+                                }
+                            </tr>
+                            idx++;
+                        }
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td><strong>@String.Format(info, "{0:c}", calPrice)</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,136 @@
+﻿@using OnlineShop.Models
+@model List<SanPhamGioHang>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ProductDetailLayout.cshtml";
+    OnlineShopDBEntities db = new OnlineShopDBEntities();
+}
+
+<div class="span9" style="overflow-x:auto;">
+    <h4 class="title"><span class="text"><strong>Giỏ hàng</strong> của bạn</span></h4>
+    <table class="table table-striped table-hover table-bordered table-responsive pre-scrollable">
+        <thead>
+            <tr>
+                <th>Xóa</th>
+                <th>Hình ảnh</th>
+                <th>Tên sản phẩm</th>
+                <th>Số lượng</th>
+                <th>Đơn giá</th>
+                <th>Thành tiền</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                double calPrice = 0;
+                var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+            }
+            @foreach (var product in Model)
+            {
+                using (Html.BeginForm("UpdateCart", "Cart"))
+                {
+            <tr>
+                <td>@Html.CheckBox("delete")</td>
+                <td><a href="@Url.Action("ProductDetail", "Product", new { id = product.MaSP })"><img alt="" src="~/Assets/images/products/@product.HinhAnh"></a></td>
+                <td>@product.TenSP</td>
+                @Html.Hidden("MaSP", product.MaSP)
+                <td><input type="number" class="input-mini" value="@product.SoLuong" name="SoLuong" min="1"></td>
+                @{
+                    var sProduct = db.SanPhamDacBiets.SingleOrDefault(item => item.MaSP == product.MaSP);
+                    var price = product.DonGia;
+                    if (sProduct != null)
+                    {
+                        if (sProduct.GiamGia > 0)
+                        {
+                            price -= price * sProduct.GiamGia / 100;
+                        }
+                    }
+                    var totalPrice = product.DonGia * product.SoLuong;
+                    calPrice += totalPrice;
+                    <td>@String.Format(info, "{0:c}", price)</td>
+                    <td>@String.Format(info, "{0:c}", totalPrice)</td>
+                }
+                <td><button class="btn btn-warning" type="submit">Cập nhật</button></td>
+            </tr>
+                }
+            }
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td><strong>@String.Format(info, "{0:c}", calPrice)</strong></td>
+                <td>&nbsp;</td>
+            </tr>
+        </tbody>
+    </table>
+    <h4>Bạn thích làm gì tiếp theo nào ?</h4>
+    <p>Chọn nếu bạn có mã giảm giá muốn áp dụng cho đơn hàng của mình. Vui lòng kiểm tra lại chi phí ước tính !</p>
+    <label class="radio">
+        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+        Sử dụng mã giảm giá
+        @using (Html.BeginForm("GetDiscount", "Cart", FormMethod.Post, new {@style="display: inline-block" }))
+        {
+            <select class="form-control" id="discount_string" name="discount_string">
+                @foreach (var item in db.MaGiamGias)
+                {
+                    if (Session["Discount"] != null)
+                    {
+                        if (@item.UuDai == int.Parse(Session["Discount"].ToString()))
+                        {
+                            <option selected value="@item.UuDai">@item.Ten (@item.UuDai%)</option>
+                        }
+                        else
+                        {
+            <option value="@item.UuDai">@item.Ten (@item.UuDai%)</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="@item.UuDai">@item.Ten (@item.UuDai%)</option>
+                    }
+                }
+            </select>
+        }
+
+    </label>
+    <label class="radio">
+        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+        Nhập mã code
+        @using (Html.BeginForm("GetDiscountCode", "Cart", FormMethod.Post, new { @style = "display: inline-block" }))
+        {
+            <input type="text" class="input-medium" placeholder="eg. AXZ123" name="discount_code" id="discount_code" />
+        }
+        
+    </label>
+    <hr>
+    <div id="calculator">
+        <p class="cart-total right">
+            <strong>Tổng phụ</strong>:	@String.Format(info, "{0:c}", calPrice)<br>
+            <strong>Giảm giá: </strong>: @String.Format(info, "{0:c}", calPrice*int.Parse(Session["Discount"].ToString())/100)<br>
+            <strong>Phí dịch vụ (17.5%)</strong>: @String.Format(info, "{0:c}", 17500)<br>
+            <strong>Tổng cộng</strong>: @String.Format(info, "{0:c}", calPrice - calPrice * int.Parse(Session["Discount"].ToString()) / 100 + 17500)<br>
+        </p>
+    </div>
+    
+    <hr>
+    <p class="buttons center">
+        <button class="btn btn-inverse" type="button" id="checkout">
+            @Html.ActionLink("Đặt hàng", "Index", "Order")
+        </button>
+    </p>
+</div>
+
+<script type="text/javascript">
+    $("#discount_string").change(function () {
+        $(this).parent("form").submit();
+    });
+    $("#discount_code").keyup(function (event) {
+        if (event.which == 13) {
+            $(this).parent("form").submit();
+        }
+    });
+</script>
+

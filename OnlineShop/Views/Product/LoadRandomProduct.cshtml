@@ -1,0 +1,38 @@
+﻿@model IEnumerable<OnlineShop.Models.SanPham>
+
+<div class="block">
+    <h4 class="title">
+        <span class="pull-left"><span class="text">NGẪU NHIÊN</span></span>
+        <span class="pull-right">
+            <a class="left button" href="#myCarousel" data-slide="prev"></a><a class="right button" href="#myCarousel" data-slide="next"></a>
+        </span>
+    </h4>
+    <div id="myCarousel" class="carousel slide">
+        <div class="carousel-inner">
+            <div class="active item">
+                <ul class="thumbnails listing-products">
+                    <li class="span3">
+                        <div class="product-box" style="height: 285px">
+                            <span class="sale_tag"></span>
+                            <p><a href="@Url.Action("ProductDetail", "Product", new { id = Model.ElementAt(0).MaSP })"><img src="~/Assets/images/products/@Model.ElementAt(0).HinhAnh" +".jpg" alt=""></a></p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            @foreach (var product in Model.Skip(1))
+            {
+                <div class="item">
+                    <ul class="thumbnails listing-products">
+                        <li class="span3">
+                            <div class="product-box" style="height: 285px">
+                                <span class="sale_tag"></span>
+                                <p><a href="@Url.Action("ProductDetail", "Product", new { id = product.MaSP })"><img src="~/Assets/images/products/@product.HinhAnh" +".jpg" alt=""></a></p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            }
+        </div>
+    </div>
+</div>
